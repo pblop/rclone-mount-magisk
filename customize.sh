@@ -27,6 +27,7 @@ extract "$ZIPFILE" "syncd.sh" "$MODPATH"
 mkdir -p "$MODPATH/system/bin"
 extract "$ZIPFILE" "common/binary/$ARCH/inotifywait" "$MODPATH/system/bin" true
 extract "$ZIPFILE" "system/bin/rclone" "$MODPATH"
+sed -i "s/{{MODULE_PATH_GOES_HERE}}/$MODPATH/" "$MODPATH/system/bin/rclone"
 extract "$ZIPFILE" "common/binary/$ARCH/rclone" "$MODPATH" true
 
 if [ "$IS64BIT" = true ]; then

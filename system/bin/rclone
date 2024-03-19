@@ -1,7 +1,16 @@
 #!/system/bin/sh
 
-# Module directory, DO NOT TOUCH THIS!
-MODDIR=${MODDIR:-$(magisk --path)/.magisk/modules/rclone.mount}
+# ~~Module directory, DO NOT TOUCH THIS!~~
+# pblop touched this. On my phone the module was installed in
+# "/data/adb/modules/rclone.mount", and $MODDIR was not set. The statement 
+# under here produced "/sbin/.magisk/modules/rclone.mount/rclone".
+#
+# MODDIR=${MODDIR:-$(magisk --path)/.magisk/modules/rclone.mount}
+# 
+# To solve this, the customize.sh file replaces this line with the $MODPATH
+# variable (which is the correct path, when that module is run).
+MODDIR="{{MODULE_PATH_GOES_HERE}}"
+
 RCLONE_BIN=${MODDIR}/rclone
 echo "Using 'rclone' binary: ${RCLONE_BIN}"
 
