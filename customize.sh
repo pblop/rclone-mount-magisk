@@ -37,7 +37,7 @@ else
     extract "$ZIPFILE" "common/lib/$ARCH/libandroid-support.so" "$MODPATH/system/lib" true
 fi
 
-extract "$ZIPFILE" "common/binary/$ARCH/fusermount" "$MODPATH/system/bin" true
+extract "$ZIPFILE" "common/binary/$ARCH/fusermount3" "$MODPATH/system/bin" true
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 set_perm "$MODPATH"/service.sh 0 0 0755
