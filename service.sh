@@ -66,7 +66,7 @@ if [[ ! -d ${MODDIR}/.config/rclone ]]; then
     mkdir -p ${MODDIR}/.config/rclone
 fi
 gethostip() {
-    ip=$(ip route list match 0 table all scope global | cut -F3)
+    ip=$(ip route list match 0 table all scope global | cut -f3)
     if [ -z "$ip" ]; then
         return 1
     else
