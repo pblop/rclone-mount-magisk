@@ -7,9 +7,12 @@
 #
 # MODDIR=${MODDIR:-$(magisk --path)/.magisk/modules/rclone.mount}
 # 
-# To solve this, the customize.sh file replaces this line with the $MODPATH
-# variable (which is the correct path, when that module is run).
-MODDIR="{{MODULE_PATH_GOES_HERE}}"
+# ~~To solve this, the customize.sh file replaces this line with the $MODPATH
+# variable (which is the correct path, when that module is run).~~
+# I've just hardcoded the module directory, it seems like it doesn't change,
+# and I'ver ealised the $MODPATH is another different directory, not the one
+# I wanted. :(
+MODDIR="/data/adb/modules/rclone.mount"
 
 RCLONE_BIN=${MODDIR}/rclone
 echo "Using 'rclone' binary: ${RCLONE_BIN}"
