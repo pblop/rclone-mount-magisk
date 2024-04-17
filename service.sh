@@ -18,8 +18,7 @@ RUNTIME_D=/mnt/runtime/default
 BINDPOINT_R=${RUNTIME_R}/emulated/${PROFILE}/Cloud
 BINDPOINT_W=${RUNTIME_W}/emulated/${PROFILE}/Cloud
 BINDPOINT_D=${RUNTIME_D}/emulated/${PROFILE}/Cloud
-BINDPOINT_P=/mnt/pass_through/${PROFILE}/emulated/${PROFILE}/Cloud
-SD_BINDPOINT=${BINDPOINT_P}
+SD_BINDPOINT=${BINDPOINT_D}
 DISABLE=0
 NETCHK=1
 
@@ -45,7 +44,7 @@ M_GID=1015
 DIRPERMS=0775
 FILEPERMS=0644
 UMASK=002
-BINDSD=1
+BINDSD=0
 SYNC_WIFI=1
 SYNC_CHARGE=0
 SYNC_BATTLVL=0
@@ -65,19 +64,8 @@ fi
 if [[ ! -d ${MODDIR}/.config/rclone ]]; then
     mkdir -p ${MODDIR}/.config/rclone
 fi
-gethostip() {
-    ip=$(ip route list match 0 table all scope global | cut -f3)
-    if [ -z "$ip" ]; then
-        return 1
-    else
-        echo "$ip"
-    fi
-}
 
-while ! (gethostip); do
-    sleep 3
-done
-NETCHK_ADDR=$(gethostip)
+NETCHK_ADDR="8.8.8.8"
 custom_params() {
     if [[ ${remote} = global ]]; then
         PARAMS="DISABLE LOGFILE LOGLEVEL CACHEMODE CHUNKSIZE CHUNKTOTAL CACHEWORKERS CACHEINFOAGE DIRCACHETIME ATTRTIMEOUT BUFFERSIZE READAHEAD M_UID M_GID DIRPERMS FILEPERMS READONLY BINDSD ADD_PARAMS REPLACE_PARAMS NETCHK NETCHK_IF NETCHK_ADDR HTTP FTP HTTP_ADDR FTP_ADDR SFTP SFTP_ADDR SFTP_USER SFTP_PASS PROFILE ISOLATE"
@@ -379,16 +367,6 @@ fi
 
 if [[ ! -L ${RUNTIME_D}/cloud ]]; then
     ln -sf ${CLOUDROOTMOUNTPOINT} ${RUNTIME_D}/cloud
-fi
-
-if [[ ! -L "$BINDPOINT_P" ]]; then
-    ln -sf "$CLOUDROOTMOUNTPOINT" "$BINDPOINT_P"
-fi
-
-if [ ! -f "$BINDPOINT_P/.nomedia" ]; then
-    touch "$BINDPOINT_P"/.nomedia
-    chown root:sdcard_rw "$BINDPOINT_P"/.nomedia
-    chmod 0644 "$BINDPOINT_P"/.nomedia
 fi
 
 if [[ -e ${USER_CONF} ]]; then
